@@ -1,0 +1,110 @@
+*vim-ibus.txt*
+
+Author: Hukumitu Youhei <hukumitu.youhei@gmail.com>
+License: MIT License
+
+==============================================================================
+CONTENTS *vim-ibus-contents*
+
+Introduction |vim-ibus-Introduction|
+Install |vim-ibus-install|
+Functions |vim-ibus-functions|
+Variables |vim-ibus-Variables|
+FAQ |vim-ibus-faq|
+
+==============================================================================
+INTRODUCTION *vim-ibus-introduction*
+
+vim-ibus turn ibus off when you leave INSERT mode.
+vim-ibus restore ibus state when you enter INSERT mode.
+
+vim-ibus provide the way to
+  - get ibus status from vimscript
+  - turn on or off ibus from vimscript
+  - toggle ibus from vimscript
+
+==============================================================================
+INSTALL *vim-ibus-install*
+
+Set layout for direct input to g:ibus#layout.
+e.g. zkb::us::eng
+
+Set input method engine to g:ibus#engine.
+
+To find layout and engine, use this command.
+>
+	ibus list-engine
+<
+
+Then, just install it.
+
+==============================================================================
+FUNCTIONS *vim-ibus-functions*
+
+ibus#activate() *ibus#activate()*
+	turn ibus on
+
+ibus#inactivate() *ibus#inactivate()*
+	turn ibus off
+
+ibus#toggle() *ibus#toggle()*
+	toggle ibus
+
+ibus#is_on() *ibus#is_on()*
+	return ibus state
+	if ibus is
+		on: |v:true|
+		off: |v:false|
+
+ibus#inactivate_with_state() *ibus#inactivate_with_state()*
+	turn ibus off
+	and keep ibus state
+
+ibus#restore_state() *ibus#restore_state()*
+	restore ibus state that is kept by |ibus#inactivate_with_state()|
+
+==============================================================================
+VARIABLES *vim-ibus-variables*
+
+g:ibus#handle_insert_mode *g:ibus#handle_insert_mode*
+	type: bool
+	default: |v:true|
+
+	Whether the plugin does setting for handling insert mode,
+	If you do setting yourself, set this variable to 0 or |v:false|.
+
+g:ibus#handle_search_command *g:ibus#handle_search_command*
+	type: bool
+	default: |v:false|
+
+	Whether the plugin does setting for handling search mode.
+	For more information, see |vim-ibus-search|.
+
+g:ibus#layout *g:ibus#layout*
+	type: string
+
+	See |vim-ibus-install|.
+
+g:ibus#engine *g:ibus#engine*
+	type: string
+
+	See |vim-ibus-install|.
+==============================================================================
+FAQ *vim-ibus-faq*
+
+*vim-ibus-search*
+Q: How can I handle ibus state automatically when I enter/leave search command?
+
+A:
+>
+	let g:ibus#handle_search_command = v:true
+<
+If you want to do setting more flexible, you can refer below code.
+>
+	nnoremap <expr> / (ibus#restore_state() . '/')
+	nnoremap <expr> ? (ibus#restore_state() . '?')
+	cnoremap <expr> <CR> (ibus#inactivate_with_state() . '<CR>')
+	cnoremap <expr> <Esc> (ibus#inactivate_with_state() . '<C-u><BS>')
+<
+
+vim:tw=78:ts=8:sw=8:sts=0:ft=help:norl:noet:fen:fdl=0
