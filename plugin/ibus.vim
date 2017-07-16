@@ -39,7 +39,7 @@ if g:ibus#handle_insert_mode
 endif
 
 if g:ibus#handle_search_command
-	nnoremap <expr> / (ibus# restore_state() . '/')
+	nnoremap <expr> / (ibus#restore_state() . '/')
 	nnoremap <expr> ? (ibus#restore_state() . '?')
 	cnoremap <expr> <CR> (ibus#inactivate_with_state() . '<CR>')
 	"<C-u><BS> is used because <Esc> doesn't work properly

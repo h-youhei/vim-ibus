@@ -19,7 +19,7 @@ function! ibus#toggle()
 endfunction
 
 function! ibus#is_on()
-	return system('ibus engine') == g:ibus#engine ? v:true : v:false
+	return system('ibus engine') =~ g:ibus#engine ? v:true : v:false
 endfunction
 
 function! ibus#inactivate_with_state()
