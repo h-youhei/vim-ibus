@@ -10,10 +10,14 @@ if system('ibus engine') =~ 'No engine is set'
 endif
 
 if !exists('g:ibus#layout')
-	echo 'please set layout for direct input to  g:ibus#layout'
+	echo 'Please set layout for direct input to g:ibus#layout'
+	echo 'To get layout name, use this command'
+	echo 'ibus list-engine'
 endif
 if !exists('g:ibus#engine')
 	echo 'please set input method engine to g:ibus#engine'
+	echo 'To get engine name, use this command'
+	echo 'ibus list-engine'
 endif
 
 let s:save_cpo = &cpo
