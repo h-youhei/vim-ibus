@@ -28,22 +28,21 @@ endif
 
 augroup ibus
 	autocmd!
+	au BufEnter,CmdwinEnter * let b:was_ibus_on = v:false
 augroup END
 
 if g:ibus#handle_insert_mode
 	augroup ibus
-		au BufEnter,CmdwinEnter * let b:was_ibus_on = v:false
 		au InsertEnter * call ibus#restore_state()
 		au InsertLeave * call ibus#inactivate_with_state()
 	augroup END
 endif
 
 if g:ibus#handle_search_command
-	nnoremap <expr> / (ibus#restore_state() . '/')
-	nnoremap <expr> ? (ibus#restore_state() . '?')
-	cnoremap <expr> <CR> (ibus#inactivate_with_state() . '<CR>')
-	"<C-u><BS> is used because <Esc> doesn't work properly
-	cnoremap <expr> <Esc> (ibus#inactivate_with_state() . '<C-u><BS>')
+	augroup ibus
+		au CmdLineEnter [/\?] call ibus#restore_state()
+		au CmdLineLeave [/\?] call ibus#inactivate_with_state()
+	augroup END
 endif
 
 let g:loaded_vim_ibus = v:true
