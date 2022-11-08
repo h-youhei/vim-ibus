@@ -1,3 +1,6 @@
+let g:ibus#layout = 'BambooUs'
+let g:ibus#engine = 'BambooUs'
+
 if exists('g:loaded_vim_ibus')
 	finish
 endif

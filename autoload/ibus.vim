@@ -1,4 +1,6 @@
 "return '' is for map <expr>
+let g:ibus#layout = 'BambooUs'
+let g:ibus#engine = 'BambooUs'
 
 function! ibus#inactivate()
 	exe "call system('ibus engine " . g:ibus#layout . "')"
